@@ -4,8 +4,9 @@
   "main": "index.js",
   "author": "SotaSuzuki <3.3sota.suzuki@gmail.com>",
   "license": "MIT",
-  "scripts": {
-    "precommit": "pretty-quick --staged"
+  "scripts": {},
+  "husky": {
+    "pre-commit": "pretty-quick --stagedf"
   },
   "dependencies": {
     "express": "4.17.1",
