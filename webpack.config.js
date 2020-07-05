@@ -34,7 +34,7 @@ const clientConfig = {
   mode: 'development',
   target: 'web',
   entry: {
-    'home.js': path.resolve(__dirname, 'dist/public/home.js'),
+    'home.js': path.resolve(__dirname, 'src/public/home.js'),
   },
   module: {
     rules: [js],
