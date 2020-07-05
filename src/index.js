@@ -8,12 +8,14 @@ const app = express();
 
 app.use('/static', express.static(path.resolve(__dirname, 'public')));
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   const myname = 'Sota Suzuki';
 
-  const component = ReactDOMServer.renderToString(<HelloWorld name={myname} />);
+  const stream = ReactDOMServer.renderToNodeStream(
+    <HelloWorld name={myname} />
+  );
 
-  const html = `
+  const htmlStart = `
   <!DOCTYPE HTML>
     <html>
       <head>
@@ -22,13 +24,22 @@ app.get('/', (req, res) => {
         })}</script>
       </head>
       <body>
-        <div id="root">${component}</div>
+        <div id="root">`;
+
+  res.write(htmlStart);
+  stream.pipe(res, { end: false });
+
+  const htmlEnd = `
+        </div>
         <script src="/static/home.js"></script>
       </body>
     </html>
   `;
 
-  res.send(html);
+  stream.on('end', () => {
+    res.write(htmlEnd);
+    res.end();
+  });
 });
 
 app.listen(3000);
